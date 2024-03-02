@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .calculator {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .result-box {
+            background-color: lightblue;
+            padding: 20px;
+            font-size: 36px; /* Increased font size */
+            font-weight: bold;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .input-label {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .input-field {
+            font-size: 18px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 8px;
+            margin-bottom: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .calculate-button {
+            font-size: 24px;
+            font-weight: bold;
+            background-color: #007bff; /* Blue background */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 15px 30px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .calculate-button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <h1>IV Infusion Rate Calculator</h1>
+        <form id="calculator-form">
+            <label for="solution-input" class="input-label">Amount of Solution (in mL):</label>
+            <input type="text" id="solution-input" class="input-field" required><br><br>
+
+            <label for="drop-factor-input" class="input-label">Drop Factor (in gtt per mL):</label>
+            <input type="text" id="drop-factor-input" class="input-field" required><br><br>
+
+            <label for="time-input" class="input-label">Time (in min):</label>
+            <input type="text" id="time-input" class="input-field" required><br><br>
+
+            <button type="submit" class="calculate-button">Calculate</button>
+        </form>
+        <div id="result-container"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var form = document.getElementById('calculator-form');
+            form.addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent form submission
+
+                var solution = parseFloat(document.getElementById('solution-input').value);
+                var dropFactor = parseFloat(document.getElementById('drop-factor-input').value);
+                var time = parseFloat(document.getElementById('time-input').value);
+
+                var flowRate = (solution * dropFactor) / time;
+                flowRate = Math.ceil(flowRate); // Round up to the nearest integer
+
+                var resultContainer = document.getElementById('result-container');
+                resultContainer.innerHTML = `
+                    <div class="result-box">
+                        <p class="input-label">Flow Rate (in drops per minute):</p>
+                        <p class="input-field" style="font-size: 36px;">${flowRate} gtt/min</p> <!-- Increased font size -->
+                    </div>
+                `;
+            });
+        });
+    </script>
+</body>
+</html>
